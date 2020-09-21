@@ -19,6 +19,11 @@ public class TransformadorDeLink {
 	private JFrame frame;
 	private JTextField entrada;
 	private JButton mudar;
+	
+	ImageIcon img;
+	
+	StringSelection stringSelection;
+	Clipboard clipboard;
 
 	/**
 	 * Launch the application.
@@ -47,20 +52,25 @@ public class TransformadorDeLink {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		entrada = new JTextField();
+		entrada.setBounds(10, 10, 400, 20);
+		
+		mudar = new JButton("mudar");
+		mudar.setBounds(110, 40, 200, 20);
+		
+		String comando = "youtube-dl -f 251 ";
+		img = new ImageIcon("/home/moises/Imagens/M.png");
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 100);
 		frame.setTitle("Mudar link com playlist para com audio");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
-		ImageIcon img = new ImageIcon("/home/moises/Imagens/M.png");
-
 		frame.setIconImage(img.getImage());
 		frame.getContentPane().setLayout(null);
-		entrada = new JTextField();
-		entrada.setBounds(10, 10, 400, 20);
-		mudar = new JButton("mudar");
-		String comando = "youtube-dl -f 251 ";
+		frame.getContentPane().add(entrada);
+		frame.getContentPane().add(mudar);
+		
 		mudar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String strComPlaylist = entrada.getText();
@@ -69,16 +79,15 @@ public class TransformadorDeLink {
 				entrada.setText("");
 				entrada.setRequestFocusEnabled(true);
 
-				StringSelection stringSelection = new StringSelection(comando.concat(link));
-				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+				stringSelection = new StringSelection(comando.concat(link));
+				clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 				clipboard.setContents(stringSelection, null);
 				
 				
 			}
 		});
-		mudar.setBounds(110, 40, 200, 20);
-		frame.getContentPane().add(entrada);
-		frame.getContentPane().add(mudar);
+		
+		
 		
 	}
 
